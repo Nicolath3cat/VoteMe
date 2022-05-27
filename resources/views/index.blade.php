@@ -6,41 +6,45 @@
 
 @section('content')
     @php
-    $debug = true;
+    $debug = request()->has('debug');
     @endphp
-    <form id="form" method="POST" action="vota">
-        @csrf
-        <div class="container">
-            <div class="row justify-content-md-center">
-                <h4 class="text-center">Voto valido: 1 o 2 preferenze</h4>
-            </div>
-            <div class="row justify-content-md-center">
-                <h4 class="text-center">Astensione: 0 preferenze</h4>
-            </div>
-            <div class="row justify-content-md-center">
-                <h4 class="text-center">Voto nullo: più di 2 preferenze</h4>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <input type="hidden" id="voteCode" name="voteCode" value="">
-                    @foreach ($candidati as $candidato)
-                        @if(($candidato->ID < 2 and $debug) or $candidato->ID >= 2)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="votati[]" id="{{ $candidato->ID }}"
-                                    value={{ $candidato->ID }}>
-                                <h4>
-                                    <label class="form-check-label" for="{{ $candidato->ID }}">
-                                        {{ $candidato->Nome . ' ' . $candidato->Cognome.' '.($debug ? $candidato->voti : '') }}
-                                    </label>
-                                </h4>
-                            </div>
-                        @endif
-                    @endforeach
+    <div class="container ">
+        <div class="row justify-content-md-center" >
+            <form id="form" method="POST" action="{{ route('vota') }}">
+                @csrf
+                <div class="row justify-content-md-center">
+                    <h4 class="col text-center">Voto valido: 1 o 2 preferenze</h4>
                 </div>
-            </div>
+                <div class="row justify-content-md-center">
+                    <h4 class="col text-center">Astensione: 0 preferenze</h4>
+                </div>
+                <div class="row justify-content-md-center">
+                    <h4 class="col text-center">Voto nullo: più di 2 preferenze</h4>
+                </div>
+                <div class="row">
+                    <div class="col-sm mt-5 mb-5">
+                        <input type="hidden" id="voteCode" name="voteCode" value="">
+                        @foreach ($candidati as $candidato)
+                            @if ($candidato->ID >=2 )
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="votati[]"
+                                        id="{{ $candidato->ID }}" value={{ $candidato->ID }}>
+                                    <h4>
+                                        <label class="form-check-label" for="{{ $candidato->ID }}">
+                                            {{ $candidato->Nome . ' ' . $candidato->Cognome . ' ' . ($debug ? $candidato->voti : '') }}
+                                        </label>
+                                    </h4>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="button" id="triggerSwalText" data-title="Un ultimo step..." data-text="Inserisci codice di voto" data-ConfirmBtn="Vota!" data-CancelBtn="Annulla" class="col-sm-12 btn-lg btn-primary btn-block">Prosegui</button>
+                </div>
+            </form>
         </div>
-    </form>
-    <button id="vota" class="btn-lg btn-primary btn-block">Vota</button>
+    </div>
     @if ($debug)
         <div class="row mt-5">
             <div class="col-lg-12">

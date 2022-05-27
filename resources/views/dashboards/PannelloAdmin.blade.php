@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-
-
-
 @section('title')
     Control Panel
 @endsection

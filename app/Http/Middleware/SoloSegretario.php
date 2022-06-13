@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class SoloAccoglienza
+class soloSegretario
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class SoloAccoglienza
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role != 2 and auth()->user()->role != 0 ) {
+        if (auth()->user()->role != 1 and auth()->user()->role != 0 ) {
             abort("403");
         }
 

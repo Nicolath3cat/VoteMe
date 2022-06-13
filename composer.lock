@@ -3056,8 +3056,7 @@
                 "permissions",
                 "rbac",
                 "roles",
-                "security",
-                "spatie"
+                "security"
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-permission/issues",

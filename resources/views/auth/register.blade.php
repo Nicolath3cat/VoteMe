@@ -31,13 +31,13 @@
                 </div>
                 <div class="col-md-12 form-group">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ruolo" id="ruolo1" value="1">
+                        <input class="form-check-input" type="radio" name="ruolo" id="ruolo1" value="2">
                         <label class="form-check-label" for="ruolo1">
                             Scrutatore
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ruolo" id="ruolo2" value="2">
+                        <input class="form-check-input" type="radio" name="ruolo" id="ruolo2" value="1">
                         <label class="form-check-label" for="ruolo2">
                             Accoglienza
                         </label>

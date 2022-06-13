@@ -23,10 +23,11 @@ color: #000000 !important;
     @endif
     <br>
     Ogni codice equivale ad un voto, può essere usato una volta sola, che si voglia esprimere un voto valido, nullo o un'astensione.
+    Per più sessioni di voto durante la stessa assemblea il codice è utilizzabile più volte, ma solo una volta per ogni sessione.
     Votare è semplice:
     <ol>
-        <li>Entra in <a href="{{ env("APP_URL") }}"> questo sito  </a></li>
-        <li> Scegli le opzioni che preferisci </li>
+        <li>Entra qui: {!! env('APP_URL', 'http://vota.cngei-vicenza.it:1915') !!}</li>
+        <li> Esprimi le tue preferenze </li>
         <li> Premi il pulsante "Vota" </li>
         <li> Inserisci il codice di voto</li>
     </ol>

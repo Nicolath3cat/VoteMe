@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Candidati extends Migration
+class Presenze extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class Candidati extends Migration
      */
     public function up()
     {
-        Schema::create('Candidati', function (Blueprint $table) {
-            $table->id();
-            $table->string('Nome',100);
-            $table->string('Cognome',100);
-            $table->integer('voti');
+        Schema::create('Presenze', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('Nome');
+            $table->string('Cognome');
+            $table->string('Email');
+            $table->time('Entrata');
+            $table->time('Uscita')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class Candidati extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Candidati');
+        Schema::dropIfExists('Presenze');
     }
 }

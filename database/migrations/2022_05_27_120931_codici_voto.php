@@ -15,6 +15,9 @@ class CodiciVoto extends Migration
     {
         Schema::create('Codici', function (Blueprint $table) {
             $table->id();
+            $table->string('Nome',50);
+            $table->string('Cognome',50);
+            $table->string('Email',50);
             $table->string('Tipo',7);
             $table->string('Codice',10);
             $table->boolean('Usato')->default(false);
@@ -28,6 +31,6 @@ class CodiciVoto extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('Codici');
     }
 }

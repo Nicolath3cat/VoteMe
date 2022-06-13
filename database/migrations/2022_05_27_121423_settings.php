@@ -18,9 +18,9 @@ class Settings extends Migration
             $table->string('Nome',100);
             $table->string('Valore',100);
             $table->string('Descrizione',100);
-            $table->unsignedBigInteger('ModificatoDa');
+            $table->UnsignedBigInteger('ModificatoDa')->default(0);
 
-            $table->foreign('ModificatoDa')->references('id')->on('Users');
+            $table->foreign('ModificatoDa')->references('id')->on('users');
         });
     }
 
@@ -31,6 +31,6 @@ class Settings extends Migration
      */
     public function down()
     {
-        //
+        schema::dropIfExists('Settings');
     }
 }

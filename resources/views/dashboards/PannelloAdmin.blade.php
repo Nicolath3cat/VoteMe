@@ -1,31 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('title')
-    Control Panel
+    Amministrazione
 @endsection
 
-@section('content')
-    {{-- voting form multiple choice --}}
-    <form id="form" method="POST" action="generaCodici">
-        @csrf
-        <div class="container">
-            <div class="row mt-4">
-                <div class="col-lg-12">
-                    <h4 class="text-center">Inserisci mail partecipante e numero di deleghe assegnate</h4>
-                </div>
+@section('Tabs')
+    <div class="container">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#register" role="tab">Registra</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#data" role="tab">Dati</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="register" role="tabpanel">
+                @yield('register')
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <input type="email" id="email" name="email" value="">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                </div>
+            <div class="tab-pane" id="data" role="tabpanel">
+                @yield("data")
             </div>
         </div>
-    </form>
-    <button id="vota" class="btn-lg btn-primary btn-block">Vota</button>
+    </div>
 @endsection
-
-

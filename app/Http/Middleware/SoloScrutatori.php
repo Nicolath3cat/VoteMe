@@ -16,7 +16,7 @@ class SoloScrutatori
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->role != 1 and auth()->user()->role != 0 ) {
+        if (auth()->user()->role != 2 and auth()->user()->role != 0 ) {
             abort("403");
         }
 

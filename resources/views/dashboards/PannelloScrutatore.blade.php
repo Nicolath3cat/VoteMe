@@ -1,122 +1,77 @@
-@extends('layouts.app')
-@php
-$settings = DB::table('Settings');
-@endphp
+@extends('layouts.dashboard')
 
 @section('title')
-    Control Panel
+    Pannello scrutatore
 @endsection
 
 
-@if ((int) $settings->where('Nome', 'accetta_voti')->first()->Valore)
-    @section('content')
-        <div class="container">
-            @if (session('toast'))
-                <div class="row justify-content-md-center">
-                    <div class="alert alert-danger col-md-5">
-                        {{ session('toast') }}
+
+@section('Tabs')
+    <div class="container">
+        @if (session('toast'))
+            <div class="row justify-content-md-center">
+                <div class="alert alert-danger col-md-5">
+                    {{ session('toast') }}
+                </div>
+            </div>
+        @endif
+        <div class="row justify-content-md-center m-3">
+        </div>
+        <form method="POST" class="form" action="{{ route('toggleVotazioni') }}">
+            <div class="row justify-content-md-left">
+                @csrf
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                {{ $votanti . '/' . $minimo_quorum }}
+                            </span>
+                        </div>
+                        @if($settings->where('Nome', 'accetta_voti')->first()->Valore == '1')
+                            <button type="button" data-title="Attenzione!" data-text="Stai per chiudere le votazioni, confermi?" class="btn btn-danger triggerSwal">
+                                Chiudi votazioni
+                            </button>
+                        @else
+                            <input type="hidden" name="tipo_votazione" id="tipo" value="">
+                            <button type="button" id="triggerSwalChoice"
+                                class="btn btn-success col-md-5 {{ $Quorum_raggiunto ?: 'disabled' }}">Apri
+                                Votazioni</button>
+                        @endif
                     </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        <ul class="nav nav-tabs" role="tablist">
+            @if ($settings->where('Nome', 'accetta_voti')->first()->Valore == '1')
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#stato" role="tab">Stato Votazioni</a>
+                </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link {{ $settings->where('Nome', 'accetta_voti')->first()->Valore == '1' ?: 'active' }}"
+                    data-toggle="tab" href="#elezioni" role="tab">Elezioni</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#referendum" role="tab">Referendum</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            @if ($settings->where('Nome', 'accetta_voti')->first()->Valore == '1')
+                <div class="tab-pane active" id="stato" role="tabpanel">
+                    @yield('stato')
                 </div>
             @endif
-            <div class="row justify-content-md-center">
-                <form method="POST" action="{{ route('toggleVotazioni') }}">
-                    @csrf
-                    <div class="col-md-12 form-group">
-                        <button type="button" id="triggerSwal" data-title="Chiudere le votazioni?"
-                            class="btn btn-danger btn-block">Chiudi votazioni</button>
-                    </div>
-                </form>
+            <div class="tab-pane {{ $settings->where('Nome', 'accetta_voti')->first()->Valore == '1' ?: 'active' }}"
+                id="elezioni" role="tabpanel">
+                @yield('elezioni')
             </div>
-            <div class="row justify-content-md-center">
-                <div class="alert alert-warning col-md-5">
-                    <h4 class="text-center">Chiudi le votazioni prima di vedere i risultati</h4>
-                </div>
+            <div class="tab-pane" id="referendum" role="tabpanel">
+                @yield('referendum')
             </div>
         </div>
-    @endsection
-@else
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-    @section('content')
-        @php
-            $settings = DB::table('Settings');
-        @endphp
-        <div class="container">
-            @if (session('toast'))
-                <div class="row justify-content-md-center">
-                    <div class="alert alert-danger col-md-5">
-                        {{ session('toast') }}
-                    </div>
-                </div>
-            @endif
-            <div class="row justify-content-md-center">
-                <form method="POST" action="{{ route('toggleVotazioni') }}">
-                    @csrf
-                    <div class="col-md-12 form-group">
-                        <button class="btn btn-success btn-block">Apri votazioni</button>
-                    </div>
-                </form>
-            </div>
-            <div class="row justify-content-md-center">
-                {{-- charting with chartjs --}}
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="text-center">Votazioni</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row justify-content-md-center">
-                                <div class="col-md-12">
-                                    <canvas id="myChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- chartjs script --}}
-        <script>
-            var ctx = document.getElementById('myChart').getContext('2d');
-            //column stack chart
-            const data = {
-                labels: [
-                    @foreach ($candidati as $candidato)
-                        '{{ $candidato->Nome . ' ' . $candidato->Cognome }}',
-                    @endforeach
-                ],
-                datasets: [{
-                    label: '',
-                    data: [
-                        @foreach ($candidati as $candidato)
-                            {{ $candidato->voti }},
-                        @endforeach
-                    ],
-                    backgroundColor: [
-                        '#aaaaaa',
-                        '#262626',
-                        '#ffcd55',
-                        '#ff8c8c',
-                        '#4bc3c3',
-                        '#9b64ff',
-                        '#ffa041',
-
-                    ],
-                    borderWidth: 1
-                }]
-            };
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {
-                    plugins: {
-                        legend: {
-                            display: false,
-                        }
-                    }
-                }
-            };
-
-            var myChart = new Chart(ctx, config);
-        </script>
-    @endsection
-@endif
+    </div>
+@endsection

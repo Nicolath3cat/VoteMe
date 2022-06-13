@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 
 <head>
@@ -28,32 +27,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="ml-auto mr-5 navbar-nav">
-                @guest
-                    <a class="nav-item nav-link" href="{{ route('login') }}">Login</a>
-                @endguest
-                @auth
-                    <a class="nav-item nav-link">{{ Auth::user()->name }}</a>
-                    <a class="nav-item nav-link" href="{{ route('homepage') }}">Vota!</a>
-                    @if (auth()->user()->role == 0)
-                        <a class="nav-item nav-link" href="{{ route('admin') }}">Amministratore</a>
-                        @endif @if (auth()->user()->role == 1 || auth()->user()->role == 0)
-                            <a class="nav-item nav-link" href="{{ route('segretario') }}">Segretario</a>
-                            @endif @if (auth()->user()->role == 2 || auth()->user()->role == 0)
-                                <a class="nav-item nav-link" href="{{ route('scrutatore') }}">Scrutatori</a>
-                            @endif
-                            <form method="post" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-link" value="logout">Logout</button>
-                            </form>
-                        @endauth
+                <a class="nav-item nav-link">{{ Auth::user()->name }}</a>
+                <a class="nav-item nav-link" href="{{ route('homepage') }}">Vota!</a>
+                @if (auth()->user()->role == 0)
+                    <a class="nav-item nav-link" href="{{ route('admin') }}">Amministratore</a>
+                @endif @if (auth()->user()->role == 1 || auth()->user()->role == 0)
+                    <a class="nav-item nav-link" href="{{ route('segretario') }}">Segretario</a>
+                @endif @if (auth()->user()->role == 2 || auth()->user()->role == 0)
+                    <a class="nav-item nav-link" href="{{ route('scrutatore') }}">Scrutatori</a>
+                @endif
+                <form method="post" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-link" value="logout">Logout</button>
+                </form>
             </div>
         </div>
     </nav>
-
-    @yield('content')
-
+    {{-- START TABS --}}
+    @yield("Tabs")
+    {{-- END TABS --}}
 </body>
 <footer>
+    @yield('scripts')
     <script src="js/app.js"></script>
     <script>
         //swal2 for success

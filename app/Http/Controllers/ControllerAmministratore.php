@@ -42,23 +42,6 @@ class ControllerAmministratore extends Controller
 
         return back()->with('success', 'Utente registrato correttamente')->with('text',' ');
     }
-    public function setupServer(){
-        DB::table("Roles")->insertOrIgnore(["id" => 0, "Nome" => "Admin"]);
-        User::create([
-            'name' => "Nicolath3cat",
-            'email' => "nicola.gatto@cngei-vicenza.it",
-            'role' => 0,
-            'password' => Hash::make("solesole")
-        ]);
-        DB::table("Roles")->insertOrIgnore(["id" => 1, "Nome" => "Segretario"]);
-        DB::table("Roles")->insertOrIgnore(["id" => 2, "Nome" => "Scrutatore"]);
-        DB::table('Candidati')->insertOrIgnore(['id' => 0, 'Nome' => 'Astensione',"Cognome"=>"", 'Voti' => 0],['id' => 1, 'Nome' => 'Nullo',"Cognome"=>"", 'Voti' => 0]);
-        DB::table('Opzioni')->insertOrIgnore(['id'=>0,'Nome'=>'Astensione','Voti'=>0]);
-        DB::table("Settings")->insertOrIgnore(["Nome"=>"tipo_votazione","Valore"=>"0","ModificatoDa"=> Auth::user()->id]);
-        DB::table("Settings")->insertOrIgnore(["Nome"=>"accetta_voti","Valore"=>0,"ModificatoDa"=> Auth::user()->id]);
-        return route("index");
-    }
-
     
     public function clearData(Request $req){
         if ($req->input('Candidati')){

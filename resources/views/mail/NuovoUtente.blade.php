@@ -13,7 +13,7 @@ color: #000000 !important;
     Ciao!<br>
     Un nuovo utente è stato creato per il tuo ruolo: {{ $ruolo }}
     <br>
-    Per accedere al sito <a href="{{ env("APP_URL","vota.cngei-vicenza.it:1915) }}/login">clicca qui</a>
+    Accedi al sito {{env("APP_URL","https://vota.cngei-vicenza.it:1915)}}/login
     ed inserisci le seguenti credenziali:<br>
     email: <input value="{{ $email }}"><br>
     password: <input value="{{ $password }}"><br>

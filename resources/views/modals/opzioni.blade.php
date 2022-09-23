@@ -21,7 +21,7 @@
                 <div class="col-sm">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Titilo sessione</span>
-                        <input type="text" class="form-control" value="{{ DB::table("Settings")->where("Nome","titolo_referendum")->first()->Valore}}" name="Domanda" placeholder="es. Sei favorevole all'iniziativa?" required>
+                        <input type="text" class="form-control" value="{{ $titolo }}" name="Domanda" placeholder="es. Sei favorevole all'iniziativa?" required>
                     </div>
                 </div>
             </div>

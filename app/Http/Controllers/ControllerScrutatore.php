@@ -29,7 +29,8 @@ class ControllerScrutatore extends Controller
     public function modalCandidati(Request $req)
     {
         $candidati = DB::table("Candidati")->where("id", ">", "1")->get();
-        return view("modals.candidati", compact('candidati'));
+        $titolo = DB::table("Settings")->where('Nome', 'titolo_elezioni')->first()->Valore;
+        return view("modals.candidati", compact('candidati','titolo'));
     }
     public function modificaCandidati(Request $req)
     {
@@ -83,7 +84,8 @@ class ControllerScrutatore extends Controller
     public function modalOpzioni(Request $req)
     {
         $opzioni = DB::table("Opzioni")->where("id", ">", "0")->get();
-        return view("modals.opzioni", compact('opzioni'));
+        $titolo = DB::table("Settings")->where('Nome', 'titolo_referendum')->first()->Valore;
+        return view("modals.opzioni", compact('opzioni','titolo'));
     }
 
     public function modificaOpzioni(Request $req)

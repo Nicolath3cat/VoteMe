@@ -21,7 +21,7 @@
                 <div class="col-sm">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Titilo sessione</span>
-                        <input type="text" class="form-control" value="" name="Domanda" placeholder="es. Elezioni membri Cos " required>
+                        <input type="text" class="form-control"  value="{{ $titolo }}" name="Domanda" placeholder="es. Elezioni membri Cos " required>
                     </div>
                 </div>
             </div>

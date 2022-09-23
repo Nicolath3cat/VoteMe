@@ -13,12 +13,12 @@ color: #000000 !important;
     Ciao!<br>
     Questa mail ti guiderà nella fase di votazione.
     <br>
-    Codice voto in proprio: <input type="text" value={{ $codiceProprio }} readonly>
+    Codice voto in proprio: {{ $codiceProprio }}
     <br>
     @if(count($codiciDelega))
         Codice voti in delega:
         @foreach($codiciDelega as $Codice)
-            <input type="text" value={{ $Codice }} readonly>
+           {{ $Codice }}
         @endforeach
     @endif
     <br>

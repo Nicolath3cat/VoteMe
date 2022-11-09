@@ -6,7 +6,6 @@
 
 @section('content')
     @php
-    $debug = request()->debug == 'godmode';
     $accetta_voti = DB::table('Settings')
         ->where('Nome', 'accetta_voti')
         ->first()->Valore;
@@ -65,18 +64,4 @@
             @endif
         </div>
     </div>
-    @if ($debug)
-        <div class="row mt-5">
-            <div class="col-lg-12">
-                @foreach ($codici as $codice)
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">{{ $codice->Usato }}</span>
-                        </div>
-                        <input type="text" class="form-control" value="{{ $codice->Codice }}">
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    @endif
 @endsection

@@ -1,4 +1,5 @@
-[VoteMe]
+[ VoteMe ]
+Progetto amatoriale
 
 Semplice sistema di votazione anonima.
 
